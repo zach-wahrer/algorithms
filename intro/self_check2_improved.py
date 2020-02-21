@@ -1,3 +1,6 @@
+"""This could also be implemented using OOP, but I'm going to move on for now."""
+
+
 import string
 import random
 
@@ -15,13 +18,16 @@ def get_goal(goal_string):
     display_count = 1
     attempts = 1
     closest_match = {'score': 0, 'string_list': []}
+    wrong_char_pointer = 0
     goal_string = goal_string
 
     test_string_list = generate_initial_string(len(goal_string))
 
     while True:
 
-        test_string_list = generate_next_wrong_char(test_string_list, goal_string)
+        test_string_list = generate_for_next_wrong_char(test_string_list,
+                                                        goal_string,
+                                                        wrong_char_pointer)
 
         score = score_string("".join(test_string_list), goal_string)
 
@@ -52,18 +58,18 @@ def score_string(test_string, goal_string):
     return number_correct(test_string, goal_string) * (100 / len(test_string))
 
 
-def generate_next_wrong_char(test_list, goal_string):
-    wrong_char_location = find_next_wrong_char(test_list, goal_string)
+def generate_for_next_wrong_char(test_list, goal_string, wrong_char_pointer):
+    wrong_char_location = find_next_wrong_char(test_list, goal_string,
+                                               wrong_char_pointer)
     test_list[wrong_char_location] = generate_random_char()
     return test_list
 
 
-def find_next_wrong_char(test_list, goal_string):
-    pointer = 0
-    while pointer < len(goal_string):
-        if test_list[pointer] != goal_string[pointer]:
-            return pointer
-        pointer += 1
+def find_next_wrong_char(test_list, goal_string, wrong_char_pointer):
+    while wrong_char_pointer < len(goal_string):
+        if test_list[wrong_char_pointer] != goal_string[wrong_char_pointer]:
+            return wrong_char_pointer
+        wrong_char_pointer += 1
 
 
 def generate_random_char():
