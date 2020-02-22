@@ -13,8 +13,11 @@ def gcd(m, n):
 
 class Fraction:
     def __init__(self, top, bottom):
-        self.num = top
-        self.den = bottom
+        if not isinstance(top, int) or not isinstance(bottom, int):
+            raise Exception("Both numbers for a Fraction must be ints.")
+        common = gcd(top, bottom)
+        self.num = top // common
+        self.den = bottom // common
 
     def __str__(self):
         return str(self.num) + "/" + str(self.den)
@@ -23,8 +26,7 @@ class Fraction:
         new_num = self.num * other_fraction.den + \
             self.den * other_fraction.num
         new_den = self.den * other_fraction.den
-        common = gcd(new_num, new_den)
-        return Fraction(new_num // common, new_den // common)
+        return Fraction(new_num, new_den)
 
     def __eq__(self, other):
         first_num = self.num * other.den
@@ -35,6 +37,12 @@ class Fraction:
         print(self.num, "/", self.den)
 
     # Add new work here
+
+    def get_num(self):
+        return self.num
+
+    def get_den(self):
+        return self.den
 
     def __mul__(self, other):
         new_num = self.num * other.num
@@ -66,6 +74,21 @@ class Fraction:
         other_new_num = other.num * self.den
         return self_new_num < other_new_num
 
+    def __ge__(self, other):
+        self_new_num = self.num * other.den
+        other_new_num = other.num * self.den
+        return self_new_num >= other_new_num
+
+    def __le__(self, other):
+        self_new_num = self.num * other.den
+        other_new_num = other.num * self.den
+        return self_new_num <= other_new_num
+
+    def __ne__(self, other):
+        first_num = self.num * other.den
+        second_num = other.num * self.den
+        return first_num == second_num
+
 
 x = Fraction(1, 2)
 y = Fraction(2, 3)
@@ -76,3 +99,10 @@ print(x / y)
 print(x - y)
 print(x > y)
 print(x < y)
+print(x >= y)
+print(x <= y)
+print(x != y)
+print(x.get_num())
+print(x.get_den())
+
+z = Fraction("error", 1)
