@@ -13,19 +13,19 @@ def k_smallest_number_linear(nums, target_smallest):
     if not nums:
         return None
 
-    target_queue = []
+    target_stack = []
 
     for num in nums:
 
-        if len(target_queue) < target_smallest:
-            target_queue.append(num)
-            target_queue.sort()
+        if len(target_stack) < target_smallest:
+            target_stack.append(num)
+            target_stack.sort()
 
-        elif num < target_queue[-1]:
-            target_queue[-1] = num
-            target_queue.sort()
+        elif num < target_stack[-1]:
+            target_stack[-1] = num
+            target_stack.sort()
 
-    return target_queue[-1]
+    return target_stack[-1]
 
 
 # O(n log(n))
