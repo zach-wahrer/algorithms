@@ -8,16 +8,45 @@ import unittest
 import random
 
 
+# O(n) sort of?
+def k_smallest_number_linear(nums, target_smallest):
+    if not nums:
+        return None
+
+    target_queue = []
+
+    for num in nums:
+
+        if len(target_queue) < target_smallest:
+            target_queue.append(num)
+            target_queue.sort()
+
+        elif num < target_queue[-1]:
+            target_queue[-1] = num
+            target_queue.sort()
+
+    return target_queue[-1]
+
+
+# O(n log(n))
 def k_smallest_number(nums, target_smallest):
-    if len(nums) == 1:
-        return nums[0]
+    if not nums:
+        return None
 
+    nums.sort()
 
-def k_smallest_number_log_linear(nums, target_smallest):
-    pass
+    return nums[target_smallest - 1]
 
 
 class TestKSmallestNumber(unittest.TestCase):
+
+    def test_zero(self):
+        input = k_smallest_number([1, 2, 3, 4, 5, 0, -1], 2)
+        self.assertEqual(input, 0)
+
+    def test_blank(self):
+        input = k_smallest_number([], 1)
+        self.assertEqual(input, None)
 
     def test_negitive_3(self):
         input = k_smallest_number([3, -1, -5, -8, 14, 9], 3)
