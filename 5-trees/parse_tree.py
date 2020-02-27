@@ -16,6 +16,20 @@ def evaluate(parse_tree):
         return parse_tree.get_root_val()
 
 
+def postorder_eval(tree):
+    opers = {'+': operator.add, '-': operator.sub,
+             '*': operator.mul, '/': operator.truediv}
+    res1 = None
+    res2 = None
+    if tree:
+        res1 = postorder_eval(tree.get_left_child())
+        res2 = postorder_eval(tree.get_right_child())
+        if res1 and res2:
+            return opers[tree.get_root_val()](res1, res2)
+        else:
+            return tree.get_root_val()
+
+
 def build_parse_tree(fp_exp):
     fp_list = fp_exp.split()
     p_stack = Stack()
@@ -45,3 +59,4 @@ def build_parse_tree(fp_exp):
 
 pt = build_parse_tree('( ( 10 + 5 ) * 3 )')
 print(evaluate(pt))
+print(postorder_eval(pt))
