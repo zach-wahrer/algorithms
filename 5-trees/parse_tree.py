@@ -1,5 +1,19 @@
 from models.stack import Stack
 from models.binary_tree import BinaryTree
+import operator
+
+
+def evaluate(parse_tree):
+    opers = {'+': operator.add, '-': operator.sub,
+             '*': operator.mul, '/': operator.truediv}
+    left = parse_tree.get_left_child()
+    right = parse_tree.get_right_child()
+
+    if left and right:
+        fn = opers[parse_tree.get_root_val()]
+        return fn(evaluate(left), evaluate(right))
+    else:
+        return parse_tree.get_root_val()
 
 
 def build_parse_tree(fp_exp):
@@ -30,3 +44,4 @@ def build_parse_tree(fp_exp):
 
 
 pt = build_parse_tree('( ( 10 + 5 ) * 3 )')
+print(evaluate(pt))
