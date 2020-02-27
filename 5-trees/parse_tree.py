@@ -30,6 +30,15 @@ def postorder_eval(tree):
             return tree.get_root_val()
 
 
+def print_exp(tree):
+    str_val = ""
+    if tree:
+        str_val = '(' + print_exp(tree.get_left_child())
+        str_val = str_val + str(tree.get_root_val())
+        str_val = str_val + print_exp(tree.get_right_child()) + ')'
+    return str_val
+
+
 def build_parse_tree(fp_exp):
     fp_list = fp_exp.split()
     p_stack = Stack()
@@ -60,3 +69,4 @@ def build_parse_tree(fp_exp):
 pt = build_parse_tree('( ( 10 + 5 ) * 3 )')
 print(evaluate(pt))
 print(postorder_eval(pt))
+print(print_exp(pt))
