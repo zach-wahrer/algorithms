@@ -13,3 +13,7 @@ print(heap.heap_list)
 print(heap.del_min())
 
 print(heap.heap_list)
+
+heap2 = BinHeap()
+heap2.build_heap(['a', 'x', 'y', 'z', 'r'])
+print(heap2.heap_list)
