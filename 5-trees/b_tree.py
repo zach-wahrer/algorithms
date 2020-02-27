@@ -26,6 +26,28 @@ tree.get_left_child().insert_right('d')
 tree.get_right_child().insert_left('e')
 tree.get_right_child().insert_right('f')
 
-print(tree.get_root_val())
-print(tree.get_left_child().get_root_val())
-print(tree.get_left_child().get_right_child().get_root_val())
+# print(tree.get_root_val())
+# print(tree.get_left_child().get_root_val())
+# print(tree.get_left_child().get_right_child().get_root_val())
+
+
+def preorder(tree):
+    if tree:
+        print(tree.get_root_val())
+        preorder(tree.get_left_child())
+        preorder(tree.get_right_child())
+
+
+def postorder(tree):
+    if tree is not None:
+        postorder(tree.get_left_child())
+        postorder(tree.get_right_child())
+        print(tree.get_root_val())
+
+
+print("Preorder: ")
+preorder(tree)
+print("\n")
+print("Postorder: ")
+postorder(tree)
+print("\n")
