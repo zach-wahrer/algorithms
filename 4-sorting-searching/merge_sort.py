@@ -38,3 +38,13 @@ sort_me = list(range(1000))
 random.shuffle(sort_me)
 merge_sort(sort_me)
 print(sort_me)
+
+
+def my_merge_sort(nums):
+    if len(nums) <= 1:
+        return nums
+    target = nums[0]
+    lower = [num for num in nums if num < target]
+    higher = [num for num in nums if num > target]
+    equal = [num for num in nums if num == target]
+    return my_merge_sort(lower) + equal + my_merge_sort(higher)
