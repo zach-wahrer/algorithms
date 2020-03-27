@@ -4,38 +4,32 @@ import random
 
 def sel_sort(items: list, order="asc") -> None:
 
-    def _find_next_max(items):
-        max_in_list = {"index": float("-inf"), "value": float("-inf")}
-        for index, value in enumerate(items):
-            if value > max_in_list['value']:
-                max_in_list['value'] = value
-                max_in_list['index'] = index
-        return max_in_list['index']
+    def _find_next(items, order):
+        if order == "asc":
+            next_in_list = {"index": float("+inf"), "value": float("+inf")}
+            for index, value in enumerate(items):
+                if value < next_in_list['value']:
+                    next_in_list['value'] = value
+                    next_in_list['index'] = index
+        else:
+            next_in_list = {"index": float("-inf"), "value": float("-inf")}
+            for index, value in enumerate(items):
+                if value > next_in_list['value']:
+                    next_in_list['value'] = value
+                    next_in_list['index'] = index
 
-    def _find_next_min(items):
-        min_in_list = {"index": float("+inf"), "value": float("+inf")}
-        for index, value in enumerate(items):
-            if value < min_in_list['value']:
-                min_in_list['value'] = value
-                min_in_list['index'] = index
-        return min_in_list['index']
+        return next_in_list['index']
 
-    if order == "asc":
+    def _sort_list(items, order):
         pointer = 0
         while pointer < len(items):
-            min_index = _find_next_min(items[pointer:])
-            items[pointer], items[min_index + pointer] = items[min_index + pointer], items[pointer]
+            next_index = _find_next(items[pointer:], order)
+            items[pointer], items[next_index + pointer] = items[next_index + pointer], items[pointer]
             pointer += 1
 
         return items
 
-    else:
-        pointer = 0
-        while pointer < len(items):
-            max_index = _find_next_max(items[pointer:])
-            items[pointer], items[max_index + pointer] = items[max_index + pointer], items[pointer]
-            pointer += 1
-        return items
+    return _sort_list(items, order)
 
 
 class TestSelectionSort(unittest.TestCase):
