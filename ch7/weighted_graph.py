@@ -9,7 +9,7 @@ def find_shortest_path(distances, visited):
 
 
 start = "Bozeman"
-finish = "Portland"
+finish = "Seattle"
 
 # map = {
 #     'Bozeman':
@@ -31,20 +31,36 @@ finish = "Portland"
 #     'Squamish': {}
 # }
 
+# map = {
+#     'Bozeman':
+#         {'Missoula': 7, 'Twin Falls': 5},
+#     'Missoula':
+#         {'Boise': 1},
+#     'Twin Falls':
+#         {'Boise': 6},
+#     'Boise':
+#         {},
+#
+# }
+
 map = {
     'Bozeman':
-        {'Missoula': 202, 'Twin Falls': 100},
+        {'Missoula': 1, 'Twin Falls': 5},
     'Missoula':
-        {'Boise': 5},
+        {'Boise': 2},
     'Twin Falls':
-        {'Boise': 129},
+        {'Boise': 1},
     'Boise':
-        {'Portland': 100},
+        {'Portland': 4},
     'Portland':
+        {'Seattle': 1},
+    'Seattle':
         {}
 }
 
+
 distances = {finish: float('inf')}
+
 for city in map[start].keys():
     distances[city] = map[start][city]
 
@@ -57,12 +73,20 @@ visited = []
 next_city = find_shortest_path(distances, visited)
 
 while next_city:
-    print(next_city, distances)
     distance = distances[next_city]
     for connection in map[next_city].keys():
         new_distance = distance + map[next_city][connection]
-        if distances[connection] > new_distance:
-            distances[connection] = new_distance
-            parents[connection] = connection
+        if connection in distances:
+            if distances[connection] > new_distance:
+                distances[connection] = new_distance
+                parents[connection] = next_city
+        else:
+            print('ping', next_city, connection, map[next_city][connection])
+            distances[connection] = map[next_city][connection]
+            parents[connection] = next_city
+
     visited.append(next_city)
     next_city = find_shortest_path(distances, visited)
+
+print(distances)
+print(parents)
