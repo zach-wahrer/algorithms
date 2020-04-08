@@ -8,15 +8,18 @@ def find_shortest_path(distances, visited):
     return nearest_city
 
 
+start = "Bozeman"
+finish = "Portland"
+
 # map = {
 #     'Bozeman':
 #         {'Missoula': 202, 'Twin Falls': 356},
 #     'Missoula':
-#         {'Twin Falls': 400, 'Spokane': 198},
+#         {'Spokane': 198},
 #     'Twin Falls':
 #         {'Boise': 129},
 #     'Boise':
-#         {'Spokane': 422, 'Portland': 431, 'Yakima': 353},
+#         {'Portland': 431, 'Yakima': 353},
 #     'Spokane':
 #         {'Yakima': 203, 'Seattle': 279},
 #     'Portland':
@@ -36,20 +39,18 @@ map = {
     'Twin Falls':
         {'Boise': 129},
     'Boise':
+        {'Portland': 100},
+    'Portland':
         {}
 }
 
-distances = {'Boise': float('inf')}
-for city in map['Bozeman'].keys():
-    distances[city] = map['Bozeman'][city]
+distances = {finish: float('inf')}
+for city in map[start].keys():
+    distances[city] = map[start][city]
 
-# distances = {'Squamish': float('inf')}
-# for city in map['Bozeman'].keys():
-#     distances[city] = map['Bozeman'][city]
-
-# parents = {'Squamish': None, 'Missoula': 'Bozeman', 'Twin Falls': 'Bozeman'}
-
-parents = {'Boise': None, 'Missoula': 'Bozeman', 'Twin Falls': 'Bozeman'}
+parents = {finish: None}
+for edge in map[start]:
+    parents[edge] = start
 
 visited = []
 
@@ -65,7 +66,3 @@ while next_city:
             parents[connection] = connection
     visited.append(next_city)
     next_city = find_shortest_path(distances, visited)
-
-
-print(distances)
-print(distances['Boise'])
