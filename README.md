@@ -1,4 +1,4 @@
 
 # algorithms
-A repo for practicing algorithms from various instructional sources.
+A repo for archiving my algorithm implementations from various instructional sources.
 =======
