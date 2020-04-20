@@ -1,2 +1,2 @@
-# grokking-algorithms
-A repo for the Grokking Algorithms book exercises.
+# algorithms
+A repo for practicing algorithms from various instructional materials.
