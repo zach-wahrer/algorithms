@@ -2,7 +2,12 @@ import unittest
 
 
 def is_palindrome(string) -> bool:
-    pass
+    if len(string) < 2:
+        return True
+    elif string[0] != string[-1]:
+        return False
+
+    return is_palindrome("".join([i for i in string[1:-1]]))
 
 
 class TestPalindrome(unittest.TestCase):
